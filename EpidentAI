@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Epident AI - Register</title>
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  .container {
+    max-width: 400px;
+    margin: 80px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    color: #0055a4;
+    text-align: center;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .btn {
+    background-color: #0055a4;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+  }
+  .link {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Register</h1>
+  <label for="username">Username</label>
+  <input type="text" id="username" />
+
+  <label for="password">Password</label>
+  <input type="password" id="password" />
+
+  <label for="confirmPassword">Confirm Password</label>
+  <input type="password" id="confirmPassword" />
+
+  <button class="btn" id="registerBtn">Register</button>
+  <div class="error" id="errorMsg"></div>
+  <div class="link">
+    Already have an account? <a href="login.html">Login here</a>
+  </div>
+</div>
+
+<script>
+  document.getElementById('registerBtn').addEventListener('click', function() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const errorMsg = document.getElementById('errorMsg');
+
+    errorMsg.textContent = '';
+
+    if (!username || !password || !confirmPassword) {
+      errorMsg.textContent = 'Please fill all fields.';
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      errorMsg.textContent = 'Passwords do not match.';
+      return;
+    }
+
+    // Save user data in localStorage (for demo only; insecure for real apps)
+    let users = JSON.parse(localStorage.getItem('users') || '{}');
+    if (users[username]) {
+      errorMsg.textContent = 'Username already exists.';
+      return;
+    }
+
+    users[username] = { password };
+    localStorage.setItem('users', JSON.stringify(users));
+
+    alert('Registration successful! You can now login.');
+    window.location.href = 'login.html';
+  });
+</script>
+
+</body>
+</html>
